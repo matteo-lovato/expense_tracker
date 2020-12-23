@@ -31,7 +31,7 @@ const Form = () => {
         const transaction = {
             ...formData,
             amount: Number(formData.amount),
-            id: uuidv4,
+            id: uuidv4(),
         };
         addTransaction(transaction);
         setFormData(initialState);
