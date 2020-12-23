@@ -11,6 +11,7 @@ import {
 } from "@material-ui/core";
 
 import { v4 as uuidv4 } from "uuid";
+import formatDate from "../../../utils/formatDate";
 import { ExpenseTrackerContext } from "../../../context/context";
 import useStyles from "./styles";
 import {
@@ -22,7 +23,7 @@ const initialState = {
     amount: "",
     category: "",
     type: "Income",
-    date: new Date(),
+    date: formatDate(new Date()),
 };
 
 const Form = () => {
@@ -88,6 +89,7 @@ const Form = () => {
                     type="number"
                     label="Amount"
                     value={formData.amount}
+                    fullWidth
                     onChange={e =>
                         setFormData({ ...formData, amount: e.target.value })
                     }
@@ -97,9 +99,13 @@ const Form = () => {
                 <TextField
                     type="date"
                     label="Date"
-                    value={formData.Date}
+                    value={formData.date}
+                    fullWidth
                     onChange={e =>
-                        setFormData({ ...formData, date: e.target.value })
+                        setFormData({
+                            ...formData,
+                            date: formatDate(e.target.value),
+                        })
                     }
                 />
             </Grid>
