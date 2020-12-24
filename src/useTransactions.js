@@ -16,7 +16,7 @@ const useTransactions = title => {
     const transactionsPerType = transactions.filter(t => t.type === title);
     // loop through all the categories and sum the amounts
     const total = transactionsPerType.reduce(
-        (accumulator, currVal) => (acc += currVal.amount),
+        (accumulator, currVal) => (accumulator += currVal.amount),
         0
     );
     // all the categories of Income or Expense type based on title
@@ -26,7 +26,7 @@ const useTransactions = title => {
     // updated amonts for each category
     transactionsPerType.forEach(t => {
         const category = categories.find(c => (c.type = t.type));
-        category?.amount += t.amount;
+        if (category) category.amount += t.amount;
     });
 
     // remove categories with amount = 0
@@ -42,7 +42,7 @@ const useTransactions = title => {
         labels: filteredCategories.map(c => c.type),
     };
 
-    return { filteredCategories, total, chartData };
+    return { total, chartData };
 };
 
 export default useTransactions;
