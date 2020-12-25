@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
     TextField,
     Typography,
@@ -42,6 +42,44 @@ const Form = () => {
         addTransaction(transaction);
         setFormData(initialState);
     };
+
+    useEffect(() => {
+        if (segment) {
+            if (segment.intent.intent === "add_expense") {
+                setFormData({ ...formData, type: "Expense" });
+            } else if (segment.intent.intent === "add_income") {
+                setFormData({ ...formData, type: "Income" });
+            } else if (
+                segment.isFinal &&
+                segment.intent.intent === "create_transaction"
+            ) {
+                return createTransaction();
+            } else if (
+                segment.isFinal &&
+                segment.intent.intent === "cancel_transaction"
+            ) {
+                return setFormData(initialState);
+            }
+            segment.entities.forEach(e => {
+                const category = `${e.value.charAt(0)}${e.value
+                    .slice(1)
+                    .toLowerCase()}`;
+                switch (e.type) {
+                    case "amount":
+                        setFormData({ ...formData, amount: e.value });
+                        break;
+                    case "category":
+                        setFormData({ ...formData, category });
+                        break;
+                    case "date":
+                        setFormData({ ...formData, date: e.value });
+                        break;
+                    default:
+                        break;
+                }
+            });
+        }
+    }, [segment]);
 
     const selectedCategories =
         formData.type === "Income" ? incomeCategories : expenseCategories;
