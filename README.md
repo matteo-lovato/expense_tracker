@@ -12,7 +12,8 @@ Add new transactions (manually or with the power of voice)
 -   select the date
 -   and finally create the transaction
 
-You can see diagrams for your transactions, one for incomes and one for expenses
+You can see diagrams for your transactions, one for incomes and one for expenses  
+All the transactions will be stored in the local store so you can retrieve them even if you close the browser
 
 -   you can also delete a wrong transaction
 
